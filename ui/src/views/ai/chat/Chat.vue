@@ -79,7 +79,8 @@
       top: contentRef.value.scrollHeight,
       behavior: 'smooth',
     })
-    const url = import.meta.env.VITE_API_BASE_URL + '/chat'
+    const baseUrl = import.meta.env.VITE_APP_BASE_URL ? import.meta.env.VITE_APP_BASE_URL : ''
+    const url = baseUrl + '/api/chat'
     const res = await axios.post(url, { user, query: question })
     setMessage(message.id, md.render(res.data.data))
     await nextTick()

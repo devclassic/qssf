@@ -1,8 +1,11 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from httpx import AsyncClient
 
 app = FastAPI()
+
+app.mount("/public", StaticFiles(directory="public", html=True), name="public")
 
 app.add_middleware(
     CORSMiddleware,
@@ -13,7 +16,7 @@ app.add_middleware(
 )
 
 
-@app.post("/chat")
+@app.post("/api/chat")
 async def chat(request: Request):
     req = await request.json()
     user = req.get("user")
@@ -37,6 +40,8 @@ async def chat(request: Request):
 
 
 if __name__ == "__main__":
+    import multiprocessing
     import uvicorn
 
+    multiprocessing.freeze_support()
     uvicorn.run("main:app", host="0.0.0.0", port=8000, workers=8)
