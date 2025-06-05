@@ -11,9 +11,7 @@
           class="chat-item"
           :class="message.type"
           :key="message.id">
-          <div class="chat-box">
-            {{ message.text }}
-          </div>
+          <div v-html="message.text" class="chat-box"></div>
         </div>
       </div>
     </div>
@@ -30,6 +28,11 @@
   import { v4 as uuidv4 } from 'uuid'
   import { useWindowSize } from '@vueuse/core'
   import { format } from 'date-fns'
+  import axios from 'axios'
+  import markdownit from 'markdown-it'
+
+  const user = uuidv4()
+  const md = markdownit()
 
   const state = reactive({
     datetime: format(new Date(), 'yyyy年MM月dd日'),
@@ -76,14 +79,14 @@
       top: contentRef.value.scrollHeight,
       behavior: 'smooth',
     })
-    setTimeout(async () => {
-      setMessage(message.id, '这是一个示例回答，实际回答内容会根据问题而变化。')
-      await nextTick()
-      contentRef.value.scrollTo({
-        top: contentRef.value.scrollHeight,
-        behavior: 'smooth',
-      })
-    }, 1000)
+    const url = import.meta.env.VITE_API_BASE_URL + '/chat'
+    const res = await axios.post(url, { user, query: question })
+    setMessage(message.id, md.render(res.data.data))
+    await nextTick()
+    contentRef.value.scrollTo({
+      top: contentRef.value.scrollHeight,
+      behavior: 'smooth',
+    })
   }
 
   const send = () => {
@@ -176,6 +179,7 @@
     font-size: 4vw;
     color: #868686;
     box-shadow: 0px 2px 2px 2px rgba(39, 115, 190, 0.18);
+    word-break: break-all;
   }
 
   .chat-item.left .chat-box {
