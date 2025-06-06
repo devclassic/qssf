@@ -2,6 +2,12 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from httpx import AsyncClient
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+base_url = os.getenv("BASE_URL")
+token = os.getenv("TOKEN")
 
 app = FastAPI()
 
@@ -21,8 +27,8 @@ async def chat(request: Request):
     req = await request.json()
     user = req.get("user")
     query = req.get("query")
-    url = "http://ai.btqssf.cn/v1/chat-messages"
-    headers = {"Authorization": "Bearer app-aPYc1Mrmv4UrmFY28qVHODbO"}
+    url = f"{base_url}/v1/chat-messages"
+    headers = {"Authorization": f"Bearer {token}"}
     data = {
         "user": user,
         "response_mode": "blocking",
@@ -44,4 +50,4 @@ if __name__ == "__main__":
     import uvicorn
 
     multiprocessing.freeze_support()
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, workers=8)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, workers=4)
