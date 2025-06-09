@@ -7,6 +7,8 @@
 <script setup>
   import { useRouter } from 'vue-router'
 
+  document.title = '青山司法AI智能解答'
+
   const router = useRouter()
 
   const start = () => {

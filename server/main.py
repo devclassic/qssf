@@ -11,8 +11,6 @@ token = os.getenv("TOKEN")
 
 app = FastAPI()
 
-app.mount("/public", StaticFiles(directory="public", html=True), name="public")
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -43,6 +41,9 @@ async def chat(request: Request):
         "message": "聊天成功",
         "data": result.get("answer", ""),
     }
+
+
+app.mount("/", StaticFiles(directory="public", html=True))
 
 
 if __name__ == "__main__":
