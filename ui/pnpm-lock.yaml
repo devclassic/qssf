@@ -29,6 +29,9 @@ importers:
       vue:
         specifier: ^3.5.16
         version: 3.5.16
+      vue-baidu-map-3x:
+        specifier: ^1.0.40
+        version: 1.0.40(vue@3.5.16)
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.16)
@@ -390,6 +393,9 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
+  '@yangjianfei/bmaplib.lushu@1.0.0':
+    resolution: {integrity: sha512-qZVijbgUgNs6tsP1muS67x0XzE5fJ3kFireouDvXO3bUYVV6XbpjZXksQTsggihLMIEvC1DO9GS9vVF8CnEeqQ==}
+
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
@@ -401,6 +407,21 @@ packages:
 
   birpc@2.3.0:
     resolution: {integrity: sha512-ijbtkn/F3Pvzb6jHypHRyve2QApOCZDR25D/VnkY2G/lBNcXCTsnsCxgY4k4PkVB7zfwzYbY3O9Lcqe3xufS5g==}
+
+  bmaplib.curveline@1.0.0:
+    resolution: {integrity: sha512-9wcFMVhiYxNPqpvsLDAADn3qDhNzXp2mA6VyHSHg2XOAgSooC7ZiujdFhy0sp+0QYjTfJ/MjmLuNoUg2HHxH4Q==}
+
+  bmaplib.distancetool@1.0.2:
+    resolution: {integrity: sha512-EvxMnQRH6xM036zx5OLPyTg5tMCTbFBuGTTHOtExLy2/T0X6v5Va0YE7c3IPm/a/Eo5V/ynYpOLOLZbRY8ccyA==}
+
+  bmaplib.heatmap@1.0.4:
+    resolution: {integrity: sha512-rmhqUARBpUSJ9jXzUI2j7dIOqnc38bqubkx/8a349U2qtw/ulLUwyzRD535OrA8G7w5cz4aPKm6/rNvUAarg/Q==}
+
+  bmaplib.markerclusterer@1.0.13:
+    resolution: {integrity: sha512-VrLyWSiuDEVNi0yUfwOhFQ6z1oEEHS4w36GNu3iASu6p52QIx9uAXMUkuSCHReNR0bj2Cp9SA1dSx5RpojXajQ==}
+
+  bmaplib.texticonoverlay@1.0.2:
+    resolution: {integrity: sha512-4ZTWr4ZP3B6qEWput5Tut16CfZgII38YwM3bpyb4gFTQyORlKYryFp9WHWrwZZaHlOyYDAXG9SX0hka43jTADg==}
 
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
@@ -599,6 +620,9 @@ packages:
     resolution: {integrity: sha512-5JRxVqC8I8NuOUjzBbvVJAKNM8qoVuH0O77h4WInc/qC2q5IreqKxYwgkga3PfA22OayK2ikceb/B26dztPl+Q==}
     engines: {node: '>=16'}
 
+  tiny-emitter@2.1.0:
+    resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
+
   tinyglobby@0.2.14:
     resolution: {integrity: sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ==}
     engines: {node: '>=12.0.0'}
@@ -649,6 +673,11 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  vue-baidu-map-3x@1.0.40:
+    resolution: {integrity: sha512-Rq3g1KNsNztkuX3SJIuCpy6HE3xHVX8ySgqS2xC3jut/hvVr5kFBS0Nu7uYppk3xYVz69S1JFxU8WUI0Xftpyg==}
+    peerDependencies:
+      vue: ^3.2.25
 
   vue-router@4.5.1:
     resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
@@ -911,6 +940,8 @@ snapshots:
     dependencies:
       vue: 3.5.16
 
+  '@yangjianfei/bmaplib.lushu@1.0.0': {}
+
   argparse@2.0.1: {}
 
   asynckit@0.4.0: {}
@@ -924,6 +955,18 @@ snapshots:
       - debug
 
   birpc@2.3.0: {}
+
+  bmaplib.curveline@1.0.0: {}
+
+  bmaplib.distancetool@1.0.2: {}
+
+  bmaplib.heatmap@1.0.4: {}
+
+  bmaplib.markerclusterer@1.0.13:
+    dependencies:
+      bmaplib.texticonoverlay: 1.0.2
+
+  bmaplib.texticonoverlay@1.0.2: {}
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -1137,6 +1180,8 @@ snapshots:
     dependencies:
       copy-anything: 3.0.5
 
+  tiny-emitter@2.1.0: {}
+
   tinyglobby@0.2.14:
     dependencies:
       fdir: 6.4.5(picomatch@4.0.2)
@@ -1156,6 +1201,17 @@ snapshots:
       tinyglobby: 0.2.14
     optionalDependencies:
       fsevents: 2.3.3
+
+  vue-baidu-map-3x@1.0.40(vue@3.5.16):
+    dependencies:
+      '@yangjianfei/bmaplib.lushu': 1.0.0
+      bmaplib.curveline: 1.0.0
+      bmaplib.distancetool: 1.0.2
+      bmaplib.heatmap: 1.0.4
+      bmaplib.markerclusterer: 1.0.13
+      tiny-emitter: 2.1.0
+      vue: 3.5.16
+      vue-router: 4.5.1(vue@3.5.16)
 
   vue-router@4.5.1(vue@3.5.16):
     dependencies:

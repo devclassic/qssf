@@ -1,3 +1,81 @@
 <template>
-  <h1>地图页</h1>
+  <baidu-map
+    class="map"
+    :zoom="12.9"
+    :center="{ lng: 109.9, lat: 40.64 }"
+    :dragging="true"
+    :scroll-wheel-zoom="true"
+    :double-click-zoom="true"
+    :keyboard="true"
+    :inertial-dragging="true"
+    :continuous-zoom="true"
+    :pinch-to-zoom="true"
+    :auto-resize="true">
+    <bm-label
+      v-for="item of state.items"
+      :content="item.title"
+      :position="item.point"
+      :labelStyle="{
+        transform: 'translate(-50%, 3px)',
+        borderRadius: '5px',
+        padding: '5px',
+        border: '2px solid #283f6b',
+      }"
+      title="Hover me" />
+    <bm-marker v-for="item of state.items" :position="item.point" @click="infoWindowOpen(item)">
+      <bm-info-window :show="item.show" @close="infoWindowClose(item)" @open="infoWindowOpen(item)">
+        <div>{{ item.title }}</div>
+        <div class="map-item" @click="mapGaode(item)">查看导航</div>
+      </bm-info-window>
+    </bm-marker>
+  </baidu-map>
 </template>
+
+<script setup>
+  import { onMounted, reactive } from 'vue'
+
+  const state = reactive({
+    items: [
+      { title: '青山区司法局福强路司法所', point: { lat: 40.67719, lng: 109.86651 }, show: false },
+      { title: '青山区司法局科学路司法所', point: { lat: 40.67218, lng: 109.85491 }, show: false },
+      { title: '青山区司法局青福镇司法所', point: { lat: 40.64957, lng: 109.91699 }, show: false },
+      { title: '青山区司法局青山路司法所', point: { lat: 40.66712, lng: 109.89434 }, show: false },
+      { title: '青山区司法局万青路司法所', point: { lat: 40.64793, lng: 109.86786 }, show: false },
+      { title: '青山区司法局乌素图司法所', point: { lat: 40.65692, lng: 109.95531 }, show: false },
+      { title: '青山区司法局先锋道司法所', point: { lat: 40.67303, lng: 109.87981 }, show: false },
+      { title: '青山区司法局兴盛镇司法所', point: { lat: 40.67229, lng: 109.92981 }, show: false },
+      { title: '青山区司法局幸福路司法所', point: { lat: 40.66626, lng: 109.87191 }, show: false },
+      { title: '青山区司法局自由路司法所', point: { lat: 40.66407, lng: 109.89297 }, show: false },
+    ],
+  })
+
+  onMounted(() => {
+    document.title = '青山司法局司法所分布'
+  })
+
+  const infoWindowOpen = item => {
+    item.show = true
+  }
+
+  const infoWindowClose = item => {
+    item.show = false
+  }
+
+  const mapGaode = item => {
+    location.href = `https://uri.amap.com/marker?name=${item.title}&position=${item.point.lng},${item.point.lat}`
+  }
+</script>
+
+<style scoped>
+  .map {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .map-item {
+    margin-top: 10px;
+    font-size: 14px;
+    color: blue;
+    cursor: pointer;
+  }
+</style>

@@ -5,9 +5,12 @@
 </template>
 
 <script setup>
+  import { onMounted } from 'vue'
   import { useRouter } from 'vue-router'
 
-  document.title = '青山司法AI智能解答'
+  onMounted(() => {
+    document.title = '青山司法AI智能解答'
+  })
 
   const router = useRouter()
 
