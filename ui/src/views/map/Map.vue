@@ -16,23 +16,48 @@
       :content="item.title"
       :position="item.point"
       :labelStyle="{
-        transform: 'translate(-50%, 3px)',
+        transform: 'translate(-50%, 30px)',
         borderRadius: '5px',
         padding: '5px',
         border: '2px solid #283f6b',
-      }"
-      title="Hover me" />
-    <bm-marker v-for="item of state.items" :position="item.point" @click="infoWindowOpen(item)">
+      }" />
+    <bm-marker
+      v-for="item of state.items"
+      :position="item.point"
+      :icon="state.pointIcon"
+      animation="BMAP_ANIMATION_BOUNCE"
+      @click="infoWindowOpen(item)">
       <bm-info-window :show="item.show" @close="infoWindowClose(item)" @open="infoWindowOpen(item)">
         <div>{{ item.title }}</div>
         <div class="map-item" @click="mapGaode(item)">查看导航</div>
       </bm-info-window>
     </bm-marker>
+    <bm-label
+      v-show="state.showPos"
+      content="我的位置"
+      :position="state.pos"
+      :labelStyle="{
+        transform: 'translate(-50%, 3px)',
+        borderRadius: '5px',
+        padding: '5px',
+        border: '2px solid red',
+      }" />
+    <bm-geolocation
+      anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
+      :locationIcon="state.locationIcon"
+      :showAddressBar="true"
+      :autoLocation="true"
+      @locationSuccess="locationSuccess"
+      @locationError="locationError" />
   </baidu-map>
 </template>
 
 <script setup>
   import { onMounted, reactive } from 'vue'
+  import { ElMessageBox } from 'element-plus'
+  import point from '../../assets/images/point.png'
+  import pos from '../../assets/images/pos.png'
+  console.log(point)
 
   const state = reactive({
     items: [
@@ -47,10 +72,23 @@
       { title: '青山区司法局幸福路司法所', point: { lat: 40.66626, lng: 109.87191 }, show: false },
       { title: '青山区司法局自由路司法所', point: { lat: 40.66407, lng: 109.89297 }, show: false },
     ],
+    pointIcon: {
+      url: point,
+      size: { width: 50, height: 50 },
+      opts: { imageSize: { width: 50, height: 50 } },
+    },
+    locationIcon: {
+      url: pos,
+      size: { width: 40, height: 40 },
+      opts: { imageSize: { width: 40, height: 40 } },
+    },
+    pos: {},
+    showPos: false,
   })
 
   onMounted(() => {
     document.title = '青山司法局司法所分布'
+    ElMessageBox.alert('点击右下角可定位到您的位置', '温馨提示')
   })
 
   const infoWindowOpen = item => {
@@ -63,6 +101,16 @@
 
   const mapGaode = item => {
     location.href = `https://uri.amap.com/marker?name=${item.title}&position=${item.point.lng},${item.point.lat}`
+  }
+
+  const locationSuccess = e => {
+    state.pos = e.point
+    state.showPos = true
+  }
+
+  const locationError = e => {
+    state.showPos = false
+    alert(e.message)
   }
 </script>
 
