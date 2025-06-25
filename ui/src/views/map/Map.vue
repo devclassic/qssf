@@ -26,7 +26,7 @@
       :position="item.point"
       :icon="state.pointIcon"
       animation="BMAP_ANIMATION_BOUNCE"
-      @click="infoWindowOpen(item)">
+      @click="mapGaode(item)">
       <bm-info-window :show="item.show" @close="infoWindowClose(item)" @open="infoWindowOpen(item)">
         <div>{{ item.title }}</div>
         <div class="map-item" @click="mapGaode(item)">查看导航</div>
