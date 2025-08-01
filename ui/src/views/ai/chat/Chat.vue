@@ -29,6 +29,7 @@
   import { useWindowSize } from '@vueuse/core'
   import { format } from 'date-fns'
   import axios from 'axios'
+  import { fetchEventSource } from '@microsoft/fetch-event-source'
   import markdownit from 'markdown-it'
 
   const user = uuidv4()
@@ -79,14 +80,52 @@
       top: contentRef.value.scrollHeight,
       behavior: 'smooth',
     })
-    const baseUrl = import.meta.env.VITE_APP_BASE_URL ? import.meta.env.VITE_APP_BASE_URL : ''
+    const baseUrl = import.meta.env.VITE_API_BASE_URL ?? ''
     const url = baseUrl + '/api/chat'
-    const res = await axios.post(url, { user, query: question })
-    setMessage(message.id, md.render(res.data.data))
-    await nextTick()
-    contentRef.value.scrollTo({
-      top: contentRef.value.scrollHeight,
-      behavior: 'smooth',
+
+    const ctrl = new AbortController() // 随时可中断
+    let answer = '' // 累加显示
+
+    await fetchEventSource(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user, query: question }),
+      signal: ctrl.signal,
+
+      // 连接成功
+      async onopen(res) {
+        if (res.ok && res.headers.get('content-type')?.includes('text/event-stream')) {
+          console.log('✅ SSE opened')
+        } else {
+          throw new Error(await res.text())
+        }
+      },
+
+      // 每收到一条 SSE 推送
+      async onmessage(ev) {
+        if (ev.data === '[DONE]') return // Dify 结束标志
+        try {
+          const chunk = JSON.parse(ev.data)
+          answer += chunk.answer || ''
+          setMessage(message.id, md.render(answer))
+          await nextTick()
+          contentRef.value.scrollTo({
+            top: contentRef.value.scrollHeight,
+            behavior: 'smooth',
+          })
+        } catch (e) {
+          /* 非 JSON 片段直接忽略 */
+        }
+      },
+
+      onerror(err) {
+        console.error(err)
+        ctrl.abort() // 出错时关闭连接
+      },
+
+      onclose() {
+        console.log('🔚 SSE closed')
+      },
     })
   }
 

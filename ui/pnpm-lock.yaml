@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@microsoft/fetch-event-source':
+        specifier: ^2.0.1
+        version: 2.0.1
       '@vueuse/core':
         specifier: ^13.3.0
         version: 13.3.0(vue@3.5.16)
@@ -238,6 +241,9 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
+
+  '@microsoft/fetch-event-source@2.0.1':
+    resolution: {integrity: sha512-W6CLUJ2eBMw3Rec70qrsEW0jOm/3twwJv21mrmj2yORiaVmVYGS4sSS5yUwvQc1ZlDLYGPnClVWmUUMagKNsfA==}
 
   '@rollup/rollup-android-arm-eabi@4.41.1':
     resolution: {integrity: sha512-NELNvyEWZ6R9QMkiytB4/L4zSEaBC03KIXEghptLGLZWJ6VPrL63ooZQCOnlx36aQPGhzuOMwDerC1Eb2VmrLw==}
@@ -915,6 +921,8 @@ snapshots:
   '@floating-ui/utils@0.2.9': {}
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
+
+  '@microsoft/fetch-event-source@2.0.1': {}
 
   '@rollup/rollup-android-arm-eabi@4.41.1':
     optional: true
