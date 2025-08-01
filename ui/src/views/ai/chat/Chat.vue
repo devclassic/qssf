@@ -107,7 +107,7 @@
         try {
           const chunk = JSON.parse(ev.data)
           answer += chunk.answer || ''
-          setMessage(message.id, md.render(answer))
+          setMessage(message.id, answer ? md.render(answer) : '正在思考中...')
           await nextTick()
           contentRef.value.scrollTo({
             top: contentRef.value.scrollHeight,
